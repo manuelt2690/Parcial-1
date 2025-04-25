@@ -1,15 +1,70 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+mport java.util.Scanner;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+public class InventarioZapatosSimple {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        String nombre = "";
+        int cantidad = 0;
+        int vendidos = 0;
+
+        System.out.println("TIENDA DE ZAPATOS - INVENTARIO SIMPLE");
+
+        System.out.print("\nNombre del zapato: ");
+        nombre = input.nextLine();
+
+        System.out.print("Cantidad en stock: ");
+        cantidad = input.nextInt();
+
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("\nOPCIONES:");
+            System.out.println("1. Vender zapatos");
+            System.out.println("2. Ver inventario");
+            System.out.println("3. Salir");
+            System.out.print("Elija una opción: ");
+
+            int opcion = input.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    // Vender
+                    System.out.print("Cuantos pares quiere vender? ");
+                    int venta = input.nextInt();
+
+                    if (venta <= (cantidad - vendidos)) {
+                        vendidos += venta;
+                        System.out.println("Venta realizada!");
+
+                        // Duplicar si se agotó
+                        if ((cantidad - vendidos) == 0) {
+                            cantidad *= 2;
+                            System.out.println("Se duplicó el inventario!");
+                        }
+                    } else {
+                        System.out.println("No hay suficiente stock!");
+                    }
+                    break;
+
+                case 2:
+                    // Ver inventario
+                    System.out.println("\nINVENTARIO ACTUAL");
+                    System.out.println("Producto: " + nombre);
+                    System.out.println("Stock inicial: " + cantidad);
+                    System.out.println("Vendidos: " + vendidos);
+                    System.out.println("Disponibles: " + (cantidad - vendidos));
+                    break;
+
+                case 3:
+                    continuar = false;
+                    System.out.println("Saliendo del sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida");
+            }
         }
+
+        input.close();
     }
 }
